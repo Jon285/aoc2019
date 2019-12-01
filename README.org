@@ -1,0 +1,3 @@
+* Advent of Code 2019
+Just my solutions for the 2019 edition of Advent of Code.
+All Written in Haskell and (maybe) in some other languages.
