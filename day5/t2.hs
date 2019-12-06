@@ -33,13 +33,10 @@ parseInstruction inst
   | op == 8 =  Instruction Equal  (Just (firstParam, secondParam))
   | otherwise = undefined
   where op = inst `mod` 100
-        (firstParam, secondParam) =
-          case ((inst `div` 100) `mod` 10, (inst `div` 1000) `mod` 10) of
-            (0, 0) -> (Pos, Pos)
-            (0, 1) -> (Pos, Imm)
-            (1, 0) -> (Imm, Pos)
-            (1, 1) -> (Imm, Imm)
-            (_, _) -> (Pos, Pos)
+        firstParam  | (inst `div` 100) `mod` 10 == 0 = Pos
+                    | otherwise = Imm
+        secondParam | (inst `div` 1000) `mod` 10 == 0 = Pos
+                    | otherwise = Imm
 
 execOpCode :: Instruction -> (Int, [Int]) -> IO (Int, [Int])
 execOpCode (Instruction Input _) (pointer, source) = do
